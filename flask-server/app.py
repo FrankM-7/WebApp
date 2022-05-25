@@ -26,3 +26,11 @@ def get_classSize():
         }
     return json1
     
+
+@app.route('/login')
+def get_login():
+    log_json = {
+        "username":"username1",
+        "password":"password1"
+        }
+    return log_json
