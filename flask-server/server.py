@@ -5,6 +5,7 @@
 
 # for i in response.json()['product']['_keywords']:
 #     print(i)
+from dataclasses import asdict
 from flask import Flask
 app = Flask(__name__)
 
@@ -14,4 +15,14 @@ def index():
 
 @app.route('/drinks')
 def get_drinks():
-    return {'drinks' : 'drink'}
+    return {'drinks' : 'drink'} #python dictionary
+
+@app.route('/classSize')
+def get_classSize():
+    json1 = {
+        "success":"true", 
+        "totalCount" : "30", 
+        "data" : [ {"enrollment" : "30"} , {"enrollment" : "40"} ]
+        }
+    return json1
+    
