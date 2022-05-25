@@ -7,7 +7,6 @@ import './App.css';
 function App() {
   // new line start
   const [profileData, setProfileData] = useState(null)
-
   function getData() {
     axios({
       method: "GET",
@@ -28,9 +27,10 @@ function App() {
     //end of new line 
 
     // check if username=username and password=password
-    function checkLogin(string) {
-      
-    }
+    const handleSubmit = (event) => {
+      // Prevent page reload
+      event.preventDefault();
+    };
     // end
     
   return (
