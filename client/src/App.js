@@ -6,9 +6,9 @@ import './App.css';
 function App() {
   var [username, password] = ["none", "none"];
   function getData(usernameInput, passwordInput) {
-    axios.get('/classSize').then((response) => {
-      username = response.data.success;
-      password = response.data.totalCount;
+    axios.get('/login').then((response) => {
+      username = response.data.username;
+      password = response.data.password;
     });
     if (usernameInput != username || passwordInput != password) {
       window.alert("wrong username/password");
@@ -28,7 +28,7 @@ function App() {
         <br></br>
         <button onClick={() => getData(document.getElementById("user").value, document.getElementById("pass").value)}>
           Log In
-        </button>        
+        </button>
       </header>
     </div>
   );
