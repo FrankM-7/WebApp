@@ -1,60 +1,34 @@
 import { useState } from 'react'
 import axios from "axios";
 
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  // new line start
-  const [profileData, setProfileData] = useState(null)
-  function getData() {
-    axios({
-      method: "GET",
-      url:"/classSize",
-    })
-    .then((response) => {
-      const res =response.data
-      setProfileData(({
-        profile_name: res.data[0].enrollment,
-        about_me: res.data[1].enrollment}))
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
-    //end of new line 
-
-    // check if username=username and password=password
-    const handleSubmit = (event) => {
-      // Prevent page reload
-      event.preventDefault();
-    };
-    // end
-    
+  var [username, password] = ["none", "none"];
+  function getData(usernameInput, passwordInput) {
+    axios.get('/login').then((response) => {
+      username = response.data.username;
+      password = response.data.password;
+    });
+    if (usernameInput != username || passwordInput != password) {
+      window.alert("wrong username/password");
+    } else {
+      window.alert("correct");
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> Black.
-        </p>
-        <p>
-          Username:
-        </p>
-        <input type="text"></input>
-        <p>
-          Password: 
-        </p>
-        <input type="password"/>
-        <button onClick={getData}>Enter</button>
-        <p>To get your profile details: </p><button onClick={getData}>Click me</button>
-        {profileData && <div>
-              <p>Profile name: {profileData.profile_name}</p>
-              <p>About me: {profileData.about_me}</p>
-            </div>
-        }
+      <header className="App-header">        
+
+        <p>Sign In</p>
+        <p>Username: </p>
+        <input id="user" type="text"/>
+        <p>Password: </p>
+        <input id="pass" type="text"/>
+        <br></br>
+        <button onClick={() => getData(document.getElementById("user").value, document.getElementById("pass").value)}>
+          Log In
+        </button>
       </header>
     </div>
   );
