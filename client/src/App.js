@@ -16,6 +16,10 @@ function App() {
       window.alert("correct");
     }
   }
+  function sendPost() {
+    
+  }
+  
   return (
     <div className="App">
       <header className="App-header">        
