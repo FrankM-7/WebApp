@@ -1,12 +1,11 @@
-# import requests
-# import json
+import firebase_admin
+from firebase_admin import credentials, firestore, initialize_app
+from flask import Flask, request, jsonify
 
-# response = requests.get("https://world.openfoodfacts.org/api/v2/product/04963406")
+cred = credentials.Certificate("credentials.json")
+default_app = firebase_admin.initialize_app(cred)
+db = firestore.client()
 
-# for i in response.json()['product']['_keywords']:
-#     print(i)
-from dataclasses import asdict
-from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
@@ -35,3 +34,14 @@ def get_login():
         "password":"password1"
         }
     return log_json
+
+@app.route('/register', methods=['POST'])
+def create():
+    try:
+        print(request.json)
+        id = request.json['username']
+        users_ref = db.collection('users')
+        users_ref.document(id).set(request.json)
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occured: {e}"
