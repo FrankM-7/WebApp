@@ -1,3 +1,4 @@
+from ast import Try
 import firebase_admin
 from firebase_admin import credentials, firestore, initialize_app
 from flask import Flask, request, jsonify
@@ -26,14 +27,23 @@ def get_classSize():
     return json1
     
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def get_login():
-    # this is comment
-    log_json = {
-        "username":"username1",
-        "password":"password1"
-        }
-    return log_json
+    print(request.args)
+    try:
+        users_ref = db.collection('users')
+        check_user = users_ref.document(request.json['username']).get().to_dict()
+        len(check_user)
+        if ((check_user['username'] == request.json['username'] and check_user['password'] == request.json['password']) == False):
+            print('no user')
+        else:
+            print('logged in')
+        
+    except Exception as e:
+        print('af')
+    print(check_user)
+    # check if the request.json information is in the 
+    return jsonify(request.json)
 
 @app.route('/register', methods=['POST'])
 def create():
@@ -45,3 +55,5 @@ def create():
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occured: {e}"
+
+    

@@ -1,0 +1,61 @@
+import { useState } from 'react'
+import axios from "axios";
+
+export function Register() {
+  var [user, setUser] = useState({});
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setUser(user => ({...user, [name]: value}))
+  }
+
+  function register() {
+    if (user.confirm_pass != user.password) {
+      window.alert("Passwords do not match.");
+      return;
+    }
+    axios.post('register', {
+      firstname: user.firstname, 
+      lastname: user.lastname, 
+      email : user.email,
+      username: user.username,
+      password: user.password
+    }).then(function (response) {
+      console.log(response);
+    });
+  }
+
+  return (
+    <div className="Register">
+      <header className="Register-header">
+        {/* <form onSubmit={() => printFields()}> */}
+          <p>Register</p>
+          <p>Email: </p>
+
+          <p>First Name: </p>
+          <input name="firstname" onChange={handleChange} type="text"/>
+
+          <p>Last Name: </p>
+          <input name="lastname" onChange={handleChange} type="text"/>
+
+          <p>Email: </p>
+          <input name="email" onChange={handleChange} type="text"/>
+
+          <p>Username: </p>
+          <input name="username" onChange={handleChange} type="text"/>
+
+          <p>Password: </p>
+          <input name="password" onChange={handleChange} type="text"/>
+
+          <p>Confirm Password: </p>
+          <input name="confirm_pass" onChange={handleChange} type="text"/>
+
+          <br></br>
+          <button onClick={() => register()}>Submit</button>
+        {/* </form> */}
+      </header>
+    </div>
+  );
+}
+
