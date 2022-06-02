@@ -1,15 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 export function Prelogin() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem('loggedIn') == 'true') {
+      navigate('../home');
+    }
+  }, []);
+
   function login() {
-    navigate('login')
+    navigate('login');
   }
   function register() {
-    navigate('register')
+    navigate('register');
   }
   return (
     <div className="Prelogin">

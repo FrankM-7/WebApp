@@ -29,21 +29,17 @@ def get_classSize():
 
 @app.route('/login', methods=['POST'])
 def get_login():
-    print(request.args)
     try:
         users_ref = db.collection('users')
         check_user = users_ref.document(request.json['username']).get().to_dict()
         len(check_user)
         if ((check_user['username'] == request.json['username'] and check_user['password'] == request.json['password']) == False):
-            print('no user')
+            return jsonify({'loggedIn' : False})
         else:
-            print('logged in')
-        
+            return jsonify({'loggedIn' : True})
     except Exception as e:
         print('af')
-    print(check_user)
-    # check if the request.json information is in the 
-    return jsonify(request.json)
+    return jsonify({'loggedIn' : False})
 
 @app.route('/register', methods=['POST'])
 def create():
@@ -56,4 +52,13 @@ def create():
     except Exception as e:
         return f"An Error Occured: {e}"
 
+@app.route('/getTasks', methods=['GET'])
+def get_tasks():
+    try:
+        users_ref = db.collection('users')
+        check_user = users_ref.document(request.json['username']).get().to_dict()
+
+    except Exception as e:
+        return f"Error in /gettasks"
     
+    return check_user    

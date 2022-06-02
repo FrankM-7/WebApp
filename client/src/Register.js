@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export function Register() {
+  const navigate = useNavigate();
   var [user, setUser] = useState({});
 
   const handleChange = (event) => {
@@ -9,6 +11,12 @@ export function Register() {
     const value = event.target.value;
     setUser(user => ({...user, [name]: value}))
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('loggedIn') == 'true') {
+      navigate('../home');
+    }
+  }, []);
 
   function register() {
     if (user.confirm_pass != user.password) {
@@ -22,7 +30,7 @@ export function Register() {
       username: user.username,
       password: user.password
     }).then(function (response) {
-      console.log(response);
+      navigate('../');
     });
   }
 
@@ -46,10 +54,11 @@ export function Register() {
           <input name="username" onChange={handleChange} type="text"/>
 
           <p>Password: </p>
-          <input name="password" onChange={handleChange} type="text"/>
+          <input name="password" onChange={handleChange} type="password"/>
 
           <p>Confirm Password: </p>
-          <input name="confirm_pass" onChange={handleChange} type="text"/>
+          <input name="confirm_pass" onChange={handleChange} type="password"/>
+          
 
           <br></br>
           <button onClick={() => register()}>Submit</button>
