@@ -55,10 +55,18 @@ def create():
 @app.route('/getTasks', methods=['GET'])
 def get_tasks():
     try:
-        users_ref = db.collection('users')
-        check_user = users_ref.document(request.json['username']).get().to_dict()
-
+        #users_ref = db.collection('users')
+        #check_user = users_ref.document(request.json['username']).get().to_dict()
+        print("hi")
     except Exception as e:
         return f"Error in /gettasks"
     
-    return check_user    
+    return {'name' : 'change'}
+
+@app.route('/getUser', methods=['GET'])
+def get_user():
+    print('gello')
+    #users_ref = db.collection('users')
+    #check_user = users_ref.document(request.json['username']).get().to_dict()
+    #print(request.json['username'])
+    return{'name' : 'change'}
