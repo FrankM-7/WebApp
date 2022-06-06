@@ -17,6 +17,7 @@ export function Prelogin() {
   function register() {
     navigate('register');
   }
+  
   return (
     <div className="Prelogin">
       <header className="Prelogin-header">

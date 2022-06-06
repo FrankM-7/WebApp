@@ -36,7 +36,7 @@ def get_login():
         if ((check_user['username'] == request.json['username'] and check_user['password'] == request.json['password']) == False):
             return jsonify({'loggedIn' : False})
         else:
-            return jsonify({'loggedIn' : True})
+            return jsonify({'loggedIn' : True, 'username' : request.json['username']})
     except Exception as e:
         print('af')
     return jsonify({'loggedIn' : False})
@@ -65,7 +65,6 @@ def get_tasks():
 
 @app.route('/getUser', methods=['GET'])
 def get_user():
-    print('gello')
     #users_ref = db.collection('users')
     #check_user = users_ref.document(request.json['username']).get().to_dict()
     #print(request.json['username'])
