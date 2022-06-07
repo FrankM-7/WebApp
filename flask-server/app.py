@@ -69,3 +69,16 @@ def get_user():
     #check_user = users_ref.document(request.json['username']).get().to_dict()
     #print(request.json['username'])
     return{'name' : 'change'}
+
+# gets BLDS (Breakfast Lunch Dinner Snack)
+@app.route('/getBLDS', methods=['GET'])
+def get_breakfast():
+    users_ref = db.collection('users')
+
+    #check_user = users_ref.document(request.json['username']).get().to_dict()
+    breakfast = users_ref.document("frankm-7").get().to_dict()['breakfastList']
+    lunch = users_ref.document("frankm-7").get().to_dict()['lunchList']
+    dinner = users_ref.document("frankm-7").get().to_dict()['dinnerList']
+    snack = users_ref.document("frankm-7").get().to_dict()['snackList']
+
+    return{'breakfast' : breakfast, 'lunch' : lunch, 'dinner' : dinner, 'snack' : snack}

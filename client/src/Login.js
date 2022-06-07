@@ -24,7 +24,7 @@ export function Login() {
       password: user.password
     }).then(function (response) {
       localStorage.setItem("loggedIn", JSON.stringify(response.data.loggedIn));
-      localStorage.setItem("username", JSON.stringify(response.data.username));
+      localStorage.setItem("username", response.data.username);
       if (localStorage.getItem('loggedIn') == 'true') {
         navigate('../home');
       } else {

@@ -9,6 +9,9 @@ import { Prelogin } from './Prelogin';
 import { Home } from './Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+localStorage.setItem("loggedIn", false);
+localStorage.setItem("username", false);
+
 root.render(
   <BrowserRouter>
       <Routes>
