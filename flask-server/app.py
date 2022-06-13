@@ -27,7 +27,7 @@ def get_classSize():
     return json1
     
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST']) #
 def get_login():
     try:
         users_ref = db.collection('users')
@@ -47,11 +47,13 @@ def create():
         print(request.json)
         id = request.json['username']
         users_ref = db.collection('users')
-        users_ref.document(id).set(request.json)
+        foodList = {'breakfastList': [], 'lunchList': [],'dinnerList': [],'snackList': []}
+        jsondic = {**request.json, **foodList}
+        users_ref.document(id).set(jsondic)
         return jsonify({"success": True}), 200
     except Exception as e:
         return f"An Error Occured: {e}"
-
+# added msg
 @app.route('/getTasks', methods=['GET'])
 def get_tasks():
     try:
@@ -76,9 +78,15 @@ def get_breakfast():
     users_ref = db.collection('users')
 
     #check_user = users_ref.document(request.json['username']).get().to_dict()
-    breakfast = users_ref.document("frankm-7").get().to_dict()['breakfastList']
-    lunch = users_ref.document("frankm-7").get().to_dict()['lunchList']
-    dinner = users_ref.document("frankm-7").get().to_dict()['dinnerList']
-    snack = users_ref.document("frankm-7").get().to_dict()['snackList']
+    breakfast = users_ref.document(request.json['username']).get().to_dict()['breakfastList']
+    lunch = users_ref.document(request.json['username']).get().to_dict()['lunchList']
+    dinner = users_ref.document(request.json['username']).get().to_dict()['dinnerList']
+    snack = users_ref.document(request.json['username']).get().to_dict()['snackList']
 
     return{'breakfast' : breakfast, 'lunch' : lunch, 'dinner' : dinner, 'snack' : snack}
+
+@app.route('/addBreakfastItem', methods=['PUT']) 
+def add_breakfast():
+    id = request.json['username']
+    user_ref.document(id).update(request.json)
+    return jsonify({"success": True}), 200
