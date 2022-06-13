@@ -42,6 +42,22 @@ export function Home() {
         });
     }, []);
 
+    const [message, setMessage] = useState('');
+    const handleClick = event => {
+        event.preventDefault();
+        // need to add 'message' to the db
+        axios.post('addBreakfastItem', {
+            item : message,
+            username : localStorage.getItem('username')
+        }).then(function (response) {
+            console.log('sent backend: item : ' + message + '\nid: ' + localStorage.getItem('username'));
+        }); 
+    };
+
+    const handleChange = event => {
+        setMessage(event.target.value);
+    };
+
     return (
         <div>
             <h1>Home Page After Login</h1>
@@ -51,7 +67,9 @@ export function Home() {
             <ul>
                 { breakfast }
             </ul>
-
+            <input type="text" id="message" name="message" value={message} onChange={handleChange} autoComplete="off" />
+            <button onClick={handleClick}>Click</button>
+            
             <h2>Lunch: </h2>
             <ul>
                 { lunch }
